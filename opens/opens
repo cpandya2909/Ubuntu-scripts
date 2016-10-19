@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+	echo "Illegal number of parameters"
+	echo "[Usage:] $0 <file with extention>"
+	exit
+fi
+
+filename="$1"
+mimtype=$(mimetype -b $filename)
+if [ -z "$mimtype" ]
+then
+	echo "I can not find mimetype of $filename"
+	exit
+fi
+
+if [ -f /usr/share/applications/defaults.list ]
+then
+	desktopfile=$(cat /usr/share/applications/defaults.list | grep $mimtype | cut -d'=' -f2)
+	if [ -z "$desktopfile" ]
+	then
+		echo "Can not find default file handler for $filename of mime type $mimtype"
+	else
+		cat /usr/share/applications/$desktopfile | grep "Exec=" | grep -v "TryExec" | cut -d'=' -f2 | sed "s/%U/$filename/g" | while read line ; do echo "Command :" $line ; done
+		
+	fi	
+else
+	echo "Default list not found"
+	exit
+fi
