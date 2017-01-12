@@ -1,11 +1,19 @@
 #!/bin/python
 import os
-print "{0:4}| {1:20} | {2:15}".format("No","Interface","IP")
-print "----+----------------------+----------------"
+print "{0:4}| {1:20} | {2:15} | {3:5}".format("No","Interface","IP","WiFi?")
+print "----+----------------------+-----------------+------"
 count = 1
 for interface in os.listdir('/sys/class/net/'):
-	if( len(os.popen("ip addr show " + interface).read().split("inet ")) > 1):
-		print "{0:4}| {1:20} | {2:15}".format(count,interface,os.popen("ip addr show " + interface).read().split("inet ")[1].split("/")[0])
+#        print "iw dev " + interface + " info 2>&1"
+
+#	print os.popen("iw dev " + interface + " info 2>&1").read()
+	if interface in str(os.popen("iw dev " + interface + " info 2>/dev/null").read()):
+		iswifi = "true"
 	else:
-		print "{0:4}| {1:20} | {2:15}".format(count,interface,"-")
+		iswifi = "false"
+        if( len(os.popen("ip addr show " + interface).read().split("inet ")) > 1):
+
+		print "{0:4}| {1:20} | {2:15} | {3:5}".format(count,interface,os.popen("ip addr show " + interface).read().split("inet ")[1].split("/")[0],iswifi)
+	else:
+		print "{0:4}| {1:20} | {2:15} | {3:5}".format(count,interface,"-",iswifi)
 	count +=1
