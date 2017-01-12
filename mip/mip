@@ -1,19 +1,20 @@
-#!/bin/python
+#!/usr/bin/python
 import os
-print "{0:4}| {1:20} | {2:15} | {3:5}".format("No","Interface","IP","WiFi?")
+print "{0:4}| {1:20} | {2:15} | {3:5}".format("No","Interface","IP","Type")
 print "----+----------------------+-----------------+------"
 count = 1
 for interface in os.listdir('/sys/class/net/'):
-#        print "iw dev " + interface + " info 2>&1"
-
-#	print os.popen("iw dev " + interface + " info 2>&1").read()
+	if interface == "lo":
+		continue
 	if interface in str(os.popen("iw dev " + interface + " info 2>/dev/null").read()):
-		iswifi = "true"
+		ifacetype = "Wifi"
+	elif str(os.popen("ip -d a show " + interface + " | grep vlan | awk '{print $1\" \"$4\" \"$5}'").read()):
+		ifacetype = str(os.popen("ip -d a show " + interface + " | grep vlan | tr vlan Vlan | awk '{print $1\"-\"$4\" (\"$5\")\"}'").read()).rstrip() + " on " + str(os.popen("ip -d a show " + interface +" | grep @ | cut -d@ -f2 | cut -d: -f1").read()).rstrip()
 	else:
-		iswifi = "false"
+		ifacetype = "Lan"
         if( len(os.popen("ip addr show " + interface).read().split("inet ")) > 1):
 
-		print "{0:4}| {1:20} | {2:15} | {3:5}".format(count,interface,os.popen("ip addr show " + interface).read().split("inet ")[1].split("/")[0],iswifi)
+		print "{0:4}| {1:20} | {2:15} | {3:5}".format(count,interface,os.popen("ip addr show " + interface).read().split("inet ")[1].split(" ")[0],ifacetype)
 	else:
-		print "{0:4}| {1:20} | {2:15} | {3:5}".format(count,interface,"-",iswifi)
+		print "{0:4}| {1:20} | {2:15} | {3:5}".format(count,interface,"-",ifacetype)
 	count +=1
