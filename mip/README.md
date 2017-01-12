@@ -2,7 +2,7 @@
 
 Usage: /usr/bin/mip
 
-Description: List all the interfaces in the system and their IP addresses
+Description: mip is short name for "My IPs". This will list all the interfaces in the system and their IP addresses with netmask and interace type
 
 Sample use:
 <pre>
