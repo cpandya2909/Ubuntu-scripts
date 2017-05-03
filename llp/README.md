@@ -8,7 +8,6 @@ Sample use:
 <pre>
 $ llp
 -rw------- 600 'config-err-r1w8Fa'
-drwx------ 700 'orbit-chinmay'
 drwx------ 700 'systemd-private-9ceb737afc454745afe86782537ff4da-colord.service-9qU8bJ'
 drwx------ 700 'systemd-private-9ceb737afc454745afe86782537ff4da-rtkit-daemon.service-rlJXbO'
 drwx------ 700 'systemd-private-9ceb737afc454745afe86782537ff4da-systemd-timesyncd.service-VYSViw'
@@ -20,7 +19,6 @@ drwx------ 700 'vmware-root'
 
 $ llp /tmp
 -rw------- 600 '/tmp/config-err-r1w8Fa'
-drwx------ 700 '/tmp/orbit-chinmay'
 drwx------ 700 '/tmp/systemd-private-9ceb737afc454745afe86782537ff4da-colord.service-9qU8bJ'
 drwx------ 700 '/tmp/systemd-private-9ceb737afc454745afe86782537ff4da-rtkit-daemon.service-rlJXbO'
 drwx------ 700 '/tmp/systemd-private-9ceb737afc454745afe86782537ff4da-systemd-timesyncd.service-VYSViw'
