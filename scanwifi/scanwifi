@@ -1,2 +1,11 @@
 #!/bin/bash
-sudo watch "iwlist scan 2>&1 | grep -i essid | cut -d'\"' -f2"
+
+if [ $# -eq 0 ]
+  then
+        iwlist scan 2>&1 | grep -i essid | cut -d'"' -f2
+
+elif [ "$1" == "refresh" ]
+  then
+        watch "iwlist scan 2>&1 | grep -i essid | cut -d'\"' -f2"
+
+fi
