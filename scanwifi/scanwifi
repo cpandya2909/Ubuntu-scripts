@@ -1,0 +1,2 @@
+#!/bin/bash
+sudo watch "iwlist scan 2>&1 | grep -i essid | cut -d'\"' -f2"
