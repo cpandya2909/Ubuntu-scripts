@@ -4,6 +4,7 @@ if [ $# -eq 0 ]
 else
 
 if [[ -d $1 ]]; then
+stat -c "%A %a %N" $1/.*
 stat -c "%A %a %N" $1/*
 elif [[ -f $1 ]]; then
 stat -c "%A %a %N" $1
